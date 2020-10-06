@@ -16,7 +16,8 @@ public class AddressBookSystem {
 			System.out.println("4. Show particular address book by its name");
 			System.out.println("5. Show address book system");
 			System.out.println("6. Search person by the city or sate");
-			System.out.println("7. Exit");
+			System.out.println("7. View person by the city or state");
+			System.out.println("8. Exit");
 			
 			int option=sc.nextInt();
 			
@@ -112,6 +113,20 @@ public class AddressBookSystem {
 			}
 			
 			if(option==7) {
+				System.out.println("Enter the state/city name to view the persons:");
+				sc.nextLine();
+				String cityOrStateName = sc.nextLine();
+				Map<String,List<String>> personCityStateMap = addressBookMain.viewPersonByCityOrState(cityOrStateName);
+				if(personCityStateMap.size()==0)
+					System.out.println("Sorry, there is no any details.");
+				else {
+					System.out.println("The mapping of city/state and persons :");
+					System.out.println(personCityStateMap);
+				}
+				continue;
+			}
+			
+			if(option==8) {
 				System.out.println("Thank you.");
 				break;
 			}
