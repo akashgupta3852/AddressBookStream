@@ -1,18 +1,19 @@
 package com.bridgelabz.addressbookstream;
 
 import java.util.*;
-
-
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AddressBook {
-	private List<ContactPerson> addressBook;
-	private static Map<String, List<ContactPerson>> addressBookSystem = new TreeMap<>();
+	private Set<ContactPerson> addressBook;
+	private static Map<String, Set<ContactPerson>> addressBookSystem = new TreeMap<>();
 
-	public List<ContactPerson> getAddressBook(){
+	public Set<ContactPerson> getAddressBook(){
 		return addressBook;
 	}
 	
-	public void setAddressBook(List<ContactPerson> addressBook){
+	public void setAddressBook(Set<ContactPerson> addressBook){
 		this.addressBook=addressBook;
 	}
 	
@@ -20,23 +21,22 @@ public class AddressBook {
 		addressBook.add(contactPerson);
 	}
 	
-	public void addAddressBookToSystem(String addressBookName, List<ContactPerson> addressBook) {
+	public void addAddressBookToSystem(String addressBookName, Set<ContactPerson> addressBook) {
 		addressBookSystem.put(addressBookName, addressBook);
 	}
 
 	public boolean isPresentAddressBook(String addressBookName) {
-		for(Map.Entry<String, List<ContactPerson>> me : addressBookSystem.entrySet()) {
-			String adBookName= me.getKey();
-			if(adBookName.equals(addressBookName)) 
-				return true;
+		Predicate<String> isPresent = k -> k.equals(addressBookName);
+		List<String> nameList = addressBookSystem.keySet().stream().filter(isPresent).collect(Collectors.toList());
+		if(nameList.size()==0)
+			return false;
+		return true;
 		}
-		return false;
-	}
 	
 	public boolean editContactPersonDetails(String addressBookName, String personName) {
-		for(Map.Entry<String, List<ContactPerson>> me : addressBookSystem.entrySet()) {
+		for(Map.Entry<String, Set<ContactPerson>> me : addressBookSystem.entrySet()) {
 			String adBookName= me.getKey();
-			List<ContactPerson> addressBook=me.getValue();	
+			Set<ContactPerson> addressBook=me.getValue();	
 			if(adBookName.equals(addressBookName)) {
 				for(ContactPerson contactPerson : addressBook)
 				{
@@ -55,9 +55,9 @@ public class AddressBook {
 	}
 	
 	public boolean deleteContactPersonDetails(String addressBookName, String personName) {
-		for(Map.Entry<String, List<ContactPerson>> me : addressBookSystem.entrySet()) {
+		for(Map.Entry<String, Set<ContactPerson>> me : addressBookSystem.entrySet()) {
 			String adBookName= me.getKey();
-			List<ContactPerson> addressBook=me.getValue();
+			Set<ContactPerson> addressBook=me.getValue();
 			if(adBookName.equals(addressBookName)) {
 				for(ContactPerson contactPerson : addressBook)
 				{
@@ -75,9 +75,9 @@ public class AddressBook {
 	
 	public void showAddressBook(String addressBookName) {
 		int check=0;
-		for(Map.Entry<String, List<ContactPerson>> me : addressBookSystem.entrySet()) {
+		for(Map.Entry<String, Set<ContactPerson>> me : addressBookSystem.entrySet()) {
 			String adBookName= me.getKey();
-			List<ContactPerson> addressBook=me.getValue();
+			Set<ContactPerson> addressBook=me.getValue();
 			if(adBookName.equals(addressBookName)) {
 				check=1;
 				if(addressBook.size()==0) {
@@ -86,8 +86,7 @@ public class AddressBook {
 				}
 				else {
 					System.out.println("The contact details of the "+addressBookName+":");
-					for(ContactPerson contactPerson: addressBook)
-						System.out.println(contactPerson);
+					addressBook.stream().forEach(contactPerson -> System.out.println(contactPerson));
 					break;
 				}
 			}
@@ -100,15 +99,14 @@ public class AddressBook {
 		if(addressBookSystem.size()==0)
 			System.out.println("There is no address book in the system.");
 		else {
-			for(Map.Entry<String, List<ContactPerson>> me : addressBookSystem.entrySet()) {
+			for(Map.Entry<String, Set<ContactPerson>> me : addressBookSystem.entrySet()) {
 				String addressBookName= me.getKey();
-				List<ContactPerson> addressBook=me.getValue();
+				Set<ContactPerson> addressBook=me.getValue();
 				System.out.println("The contact details of the "+addressBookName+":");
 				if(addressBook.size()==0)
 					System.out.println("Sorry, there is no contact in the "+addressBookName+".");
 				else
-					for(ContactPerson contactPerson: addressBook)
-						System.out.println(contactPerson);
+					addressBook.stream().forEach(contactPerson -> System.out.println(contactPerson));
 			}
 		}
 

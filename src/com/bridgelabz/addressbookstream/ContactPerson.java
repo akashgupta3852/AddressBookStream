@@ -48,6 +48,22 @@ public class ContactPerson {
 		this.phoneNo = phoneNo;
 		this.emailId = emailId;
 	}
+	
+	@Override
+	public boolean equals(Object object) {
+		ContactPerson contactPerson = (ContactPerson)object;
+		String personName = this.firstName+" "+this.lastName;
+		String personName1 = contactPerson.firstName+" "+contactPerson.lastName;
+		int compare = personName.compareTo(personName1);
+		if(compare==0)
+			return true;
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return 10;
+	}
 
 	@Override
 	public String toString() {

@@ -4,7 +4,7 @@ import java.util.*;
 public class AddressBookSystem {
 
 	public static void main(String[] args) {
-System.out.println("Welcome to Address Book Program");
+		System.out.println("Welcome to Address Book Program");
 		
 		AddressBook addressBookMain=new AddressBook();
 		Scanner sc=new Scanner(System.in);
@@ -31,7 +31,7 @@ System.out.println("Welcome to Address Book Program");
 					System.out.println("Enter the number of person's details to be added in address book: "+addressBookName);
 					int noOfPerson=sc.nextInt();
 					
-					List<ContactPerson> phoneBook = new ArrayList<>();
+					Set<ContactPerson> phoneBook = new HashSet<>();
 					addressBookMain.setAddressBook(phoneBook);
 					for(int j=0;j<noOfPerson;j++) {
 						System.out.println("Enter the details of the Contact Person");
@@ -41,7 +41,7 @@ System.out.println("Welcome to Address Book Program");
 						System.out.println("The details of the "+name+" is added to the Address Book: "+addressBookName+" successfully.");
 					}
 
-					List<ContactPerson> addressBook = addressBookMain.getAddressBook();
+					Set<ContactPerson> addressBook = addressBookMain.getAddressBook();
 					addressBookMain.addAddressBookToSystem(addressBookName,addressBook);
 					
 					System.out.println("Address Book: "+addressBookName+" is successfully added to the system.");
