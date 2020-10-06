@@ -17,7 +17,8 @@ public class AddressBookSystem {
 			System.out.println("5. Show address book system");
 			System.out.println("6. Search person by the city or sate");
 			System.out.println("7. View person by the city or state");
-			System.out.println("8. Exit");
+			System.out.println("8. Count by city or sate");
+			System.out.println("9. Exit");
 			
 			int option=sc.nextInt();
 			
@@ -127,6 +128,19 @@ public class AddressBookSystem {
 			}
 			
 			if(option==8) {
+				System.out.println("Enter the state/city name to count the persons:");
+				sc.nextLine();
+				String cityOrStateName = sc.nextLine();
+				List<String> personsInCityOrState = addressBookMain.searchPersonByCityorState(cityOrStateName);
+				if(personsInCityOrState.size()==0)
+					System.out.println("Sorry, there is no person in the "+cityOrStateName+".");
+				else {
+					addressBookMain.countPersonByCityorState(cityOrStateName);
+				}
+				continue;
+			}
+			
+			if(option==9) {
 				System.out.println("Thank you.");
 				break;
 			}
