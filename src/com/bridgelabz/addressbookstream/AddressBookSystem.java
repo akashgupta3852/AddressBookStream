@@ -15,7 +15,8 @@ public class AddressBookSystem {
 			System.out.println("3. Delete contact details of the address book");
 			System.out.println("4. Show particular address book by its name");
 			System.out.println("5. Show address book system");
-			System.out.println("6. Exit");
+			System.out.println("6. Search person by the city or sate");
+			System.out.println("7. Exit");
 			
 			int option=sc.nextInt();
 			
@@ -97,6 +98,20 @@ public class AddressBookSystem {
 			}
 			
 			if(option==6) {
+				System.out.println("Enter the state/city name to search the persons:");
+				sc.nextLine();
+				String cityOrStateName = sc.nextLine();
+				List<String> personsInCityOrState = addressBookMain.searchPersonByCityorState(cityOrStateName);
+				if(personsInCityOrState.size()==0)
+					System.out.println("Sorry, there is no person in the "+cityOrStateName+".");
+				else {
+					System.out.println("The list of persons in the "+cityOrStateName+":");
+					personsInCityOrState.stream().forEach(personName -> System.out.println(personName));
+				}
+				continue;
+			}
+			
+			if(option==7) {
 				System.out.println("Thank you.");
 				break;
 			}
