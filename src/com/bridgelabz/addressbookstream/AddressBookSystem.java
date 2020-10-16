@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbookstream;
 
+import java.io.IOException;
 import java.util.*;
 
 public class AddressBookSystem {
@@ -8,6 +9,7 @@ public class AddressBookSystem {
 		System.out.println("Welcome to Address Book Program");
 
 		AddressBook addressBookMain = new AddressBook();
+		AddressBookFileNIO addBookFileNIO = new AddressBookFileNIO();
 		Scanner input = new Scanner(System.in);
 
 		while (true) {
@@ -23,7 +25,9 @@ public class AddressBookSystem {
 			System.out.println("9. Sort the address book by City");
 			System.out.println("10. Sort the address book by State");
 			System.out.println("11. Sort the address book by Zip");
-			System.out.println("12. Exit");
+			System.out.println("12. Writing data to file");
+			System.out.println("13. Reading data from file");
+			System.out.println("14. Exit");
 
 			String option = input.next();
 
@@ -198,8 +202,28 @@ public class AddressBookSystem {
 				continue;
 			}
 
-			// Exiting from the address book system
+			// Writing data into file
 			if (option.equals("12")) {
+				try {
+					addBookFileNIO.writeToFile(addressBookMain.getAddressBookSystem());
+				} catch (IOException e) {
+					e.getMessage();
+				}
+				continue;
+			}
+
+			// Reading data from file
+			if (option.equals("13")) {
+				try {
+					addBookFileNIO.readFromFile();
+				} catch (IOException e) {
+					e.getMessage();
+				}
+				continue;
+			}
+
+			// Exiting from the address book system
+			if (option.equals("14")) {
 				System.out.println("Thank you.");
 				break;
 			} else
